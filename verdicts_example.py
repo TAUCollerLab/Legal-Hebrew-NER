@@ -1,18 +1,28 @@
-import configparser
 import os
-import docx2txt
-# import textract
-# we will use configparser to work with out configuration ini file for requests and data location
+import docx2txt  # could also use textract(process) method but return type is byte-coded.
+import json
 
-config = configparser.ConfigParser()
-config.read('conf.ini')
 
 def iter_word_documents(directory: str) -> str:
+
     """
-    created a generator object that read each doc/docx document at a time and converts to string
+    function that returns a generator object that read each doc/docx document at a time
+    and returns it as a string.
     """
     for root, dirs, files in os.walk(directory):
-        for fname in filter(lambda fname: fname.endswith('.docx'), files):
-            document = docx2txt.process(os.path.join(root, fname))
+        for fname in filter(lambda file: file.endswith('.docx'), files):
+            document = docx2txt.process(os.path.join(root, fname))  # process method returns str type
+            yield document
 
-    yield document
+
+#  The splitting criteria based only on few examples Ariel sent and will not stay like it( based on "מעבר").
+
+gen_of_docs = iter_word_documents('verdicts_documents')
+list_of_paragraphs = []
+
+for doc in gen_of_docs:
+    docs_paragraphs = doc.split('=========================== מעבר =========================')
+    list_of_paragraphs = list_of_paragraphs + docs_paragraphs
+
+#  Creating json file for the paragraphs that should be tagged
+#  json.dumps(dict([(k, v) for k, v in enumerate(list_of_paragraphs)]))
