@@ -25,4 +25,7 @@ for doc in gen_of_docs:
     list_of_paragraphs = list_of_paragraphs + docs_paragraphs
 
 #  Creating json file for the paragraphs that should be tagged
-#  json.dumps(dict([(k, v) for k, v in enumerate(list_of_paragraphs)]))
+with open('json_verdict_examples.json', 'w') as output_file:  # dumps method writes as json string first
+    #  dict([(k, v) for k, v in enumerate(list_of_paragraphs)])
+    output_file.write(json.dumps([{"id": k, "content": v} for k, v in enumerate(list_of_paragraphs)]))
+
