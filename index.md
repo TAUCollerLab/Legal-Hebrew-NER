@@ -98,7 +98,7 @@
 
 ### סרטון הדגמת עבודת תיוג:
 
-<video src="./src/testing.mp4" type="video/mp4"/>
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)]("./src/testing.mp4")
 
 
 
