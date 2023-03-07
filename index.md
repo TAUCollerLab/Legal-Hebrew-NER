@@ -98,13 +98,8 @@
 
 ### סרטון הדגמת עבודת תיוג:
 
+<video src="./src/testing.mp4" type="video/mp4"/>
+
+
 
 </div>
-<p dir='rtl' align='right'>test</p>
-
-<source src="./src/testing.mp4" type="video/mp4" markdown="1" >
-<video src="./src/testing.mp4"/>
-
-
-https://user-images.githubusercontent.com/126666483/223432880-ecb566ed-b630-4531-96d9-c98cf5a96b7a.mp4
-
