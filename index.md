@@ -98,8 +98,9 @@
 
 ### סרטון הדגמת עבודת תיוג:
 
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)]("./src/testing.mp4")
 
+
+[<img src="./src/first.png" width="75%">]("./src/testing.mp4")
 
 
 </div>
