@@ -29,3 +29,14 @@ with open('json_verdict_examples.json', 'w') as output_file:  # dumps method wri
     #  dict([(k, v) for k, v in enumerate(list_of_paragraphs)])
     output_file.write(json.dumps([{"id": k, "content": v} for k, v in enumerate(list_of_paragraphs)]))
 
+
+
+# reading txt file and returning wihtout blank / empty lines.
+# with open('myfile.txt', encoding = 'utf8') as f, open('newfile.txt', 'w', encoding = 'utf8') as w:
+#     w.write("".join(line for line in f if not line.isspace()))  #working with blank txt files.
+
+# reading the sample.json file that Lev provided
+# samples = []
+# with open('./sample.json', 'r', encoding='utf8') as j:
+#     for line in j:
+#         samples.append(json.loads(line))

@@ -2,6 +2,7 @@ import json
 from typing import List
 import configparser
 import requests
+import pandas as pd
 
 
 def generator_for_samples(path_to_data: str = './sample.json') -> List[str]:
@@ -98,6 +99,24 @@ assert auth_details['is_manager'] == 1, "Not a manager"  # Check you are a manag
 
 session = requests.session()
 session.headers.update({"Authorization": "Token {token}".format(token=token)})
+
+# reading data from specific task :
+(session.get(API_BASE+'projects/default/task_definitions/').json())  # returns whole tasks information.
+test_td = r'http://legalhebrewnlp.lighttag.io/api/v1/projects/default/task_definitions/tagging-example-and-testing/'
+data = session.get(test_td+'download/').json()
+# data.keys() - gives the keys that also mentioned in lighttag API in "working wiht reuslts"
+# data['examples'][0] - dictionary. Without index it's a list.
+# It gives the whole content(first paragraph to annotate) and it's data.
+# data['examples'][0].keys() - the comments will be here.
+# len(data['examples'] gives the lists length and each index refers to different content and example id:
+# for example: data['examples'][0]['example_id']
+# data['examples'][0]['comments'][0] - returns the dictionary of the comment. without index it's list of dict's.
+# converting examples data to pd.DF:
+# examples = data['examples']
+# pd.DataFrame(examples) - here there is a column of annotations and comments.
+
+
+
 # session.get(API_BASE+'projects/').json()
 legal_ds = {
     "name": "Legal Dataset",

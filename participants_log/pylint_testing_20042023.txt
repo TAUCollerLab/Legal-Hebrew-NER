@@ -1,0 +1,16 @@
+************* Module results_analysis
+results_analysis.py:29:0: C0301: Line too long (110/100) (line-too-long)
+results_analysis.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+results_analysis.py:16:11: W3101: Missing timeout argument for method 'requests.post' can cause your program to hang indefinitely (missing-timeout)
+results_analysis.py:25:41: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+results_analysis.py:32:55: W0108: Lambda may not be necessary (unnecessary-lambda)
+results_analysis.py:33:60: W0108: Lambda may not be necessary (unnecessary-lambda)
+results_analysis.py:45:5: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+results_analysis.py:51:0: C0413: Import "import subprocess" should be placed at the top of the module (wrong-import-position)
+results_analysis.py:53:0: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
+results_analysis.py:5:0: C0411: standard import "from collections import defaultdict" should be placed before "import requests" (wrong-import-order)
+results_analysis.py:51:0: C0411: standard import "import subprocess" should be placed before "import requests" (wrong-import-order)
+
+------------------------------------------------------------------
+Your code has been rated at 6.76/10 (previous run: 5.00/10, +1.76)
+

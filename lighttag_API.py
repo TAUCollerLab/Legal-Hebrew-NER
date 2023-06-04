@@ -1,11 +1,10 @@
 import requests
-import pandas as pd
+# import pandas as pd
 import configparser
-from pprint import pprint  # printing the json files prettier
+# from pprint import pprint  # printing the json files prettier
 import json
 
 #  we will use configparser to work with our configuration ini file for requests and data location
-
 config = configparser.ConfigParser()
 config.read('conf.ini')
 

@@ -2,3 +2,5 @@ conf*
 .idea
 venv
 verdicts_documents
+.ipynb_checkpoints/
+__pycache__/
