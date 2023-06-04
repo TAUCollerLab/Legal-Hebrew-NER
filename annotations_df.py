@@ -104,7 +104,6 @@ if __name__ == "__main__":
     end_loop = time.time()
     print("time taken as loop ", end_loop-start_loop)
 
-
     start_pool = time.time()
     with mp.Pool(mp.cpu_count()-1) as pool:
         results = pool.map(process_each_paragraph, ids[:50])
