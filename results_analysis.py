@@ -4,7 +4,7 @@ import pandas as pd
 from collections import defaultdict
 
 
-def lighttag_connection() -> pd.DataFrame:
+def lighttag_connection() -> str:
 
     config = configparser.ConfigParser()
     config.read('conf.ini')
@@ -26,7 +26,6 @@ def lighttag_connection() -> pd.DataFrame:
     session = requests.session()
     session.headers.update({"Authorization": "Token {token}".format(token=token)})
 
-    # regular task id(priority 7 in LightTag) : 2b934f94-8d7c-4db9-8383-d412e772a481
     reg_task_url = config['Reg_task']['reg_url']
     json_data = session.get(reg_task_url+'download/').json()  # returns a list of jsons - sized by number of paragraphs
     json_data_examples = json_data['examples']
