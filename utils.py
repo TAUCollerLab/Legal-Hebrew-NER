@@ -35,9 +35,9 @@ def lighttag_connection() -> str:
 
 def logging_annotators(file_name: str, update: bool = False) -> None:
     """"
-    use for example file_name = participants_id_07_05.txt
+    use file_name = participants_id_07_05.txt for example.
     change update to True only when logging Prolifics data.
-    examples convert Light Tag's output as json to DataFrame.
+    examples variable creates a dataframe out of LightTags json output.
 
     """
     examples = pd.DataFrame(lighttag_connection())
@@ -53,12 +53,5 @@ def logging_annotators(file_name: str, update: bool = False) -> None:
                 file.write(key + "\n")
 
 
-# examples = pd.DataFrame(lighttag_connection())  # convert downloaded task data to a dataframe
-# examples = examples[examples['annotations'].str.len() > 0]  # stay only with annotated paragraphs
-# examples['num_annotators'] = examples['seen_by'].apply(lambda row: len(row))
-# examples = examples[examples['num_annotators'] > 2]
-
-
-# for writing pylint in python script as shell script:
 # import subprocess
 # subprocess.run('pylint results_analysis.py > pylint_testing_20042023.txt', shell=True)

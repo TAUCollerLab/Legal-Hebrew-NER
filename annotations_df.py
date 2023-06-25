@@ -1,4 +1,4 @@
-from results_analysis import lighttag_connection
+from utils import lighttag_connection
 import multiprocessing as mp
 import pandas as pd
 import numpy as np
@@ -51,70 +51,44 @@ exploded['user_1'], exploded['user_2'], exploded['user_3'] = "", "", ""
 exploded['content_words'] = exploded['content_words']\
     .apply(lambda row: row if row[-1] not in ['.', ',', '?', '!', ':', ';'] else row[:-1])
 
-# exploded.to_csv('paragraph_words.csv', index=False, encoding='utf-8-sig')
-# subset_first_paragraph = exploded.query("example_id == '00afb784-d626-4a58-931e-190f053c3e67'")
-# subset_first_annotations = final_df.query("example_id == '00afb784-d626-4a58-931e-190f053c3e67'")
-# exploded['annotators'] = np.empty((len(exploded), 0)).tolist()
-
-# final_df['value'] = final_df['value'].str.split()
-# final_df.fillna("", inplace=True)
-# exploded_final_df = final_df.explode('value').reset_index(drop=True)
-# examples['content_words'] = examples['content'].apply(lambda row: row.split())
 
 ids = list(examples['example_id'].unique())
 
 
 def process_each_paragraph(example_id: str) -> pd.DataFrame:
     """
-    :param example_id: first paragraph will be : 00afb784-d626-4a58-931e-190f053c3e67
-    :return: dataframe of paragraphs words/tokens and annotations per user.
+    param: example_id - first paragraph will be : 00afb784-d626-4a58-931e-190f053c3e67
+    return: dataframe of paragraphs words/tokens and annotations per user.
+    in case we are willing to get a dense representation of the annotations and not
+    a sparse one(sparse means whole paragraphs words no matter if they were annotated):
+
+     dense_df = subset_first_paragraph.copy()
+     dense_df = dense_df[(dense_df['user_1'] != '') |
+                         (dense_df['user_0'] != '') |
+                         (dense_df['user_-1'] != '')]
+
     """
 
-    subset_first_paragraph = exploded.copy().query("example_id == @example_id")
-    subset_first_annotations = final_df.copy().query("example_id == @example_id")
+    subset_paragraph = exploded.copy().query("example_id == @example_id")
+    subset_annotations = final_df.copy().query("example_id == @example_id")
 
-    for word in range(0, len(subset_first_paragraph)):
+    for word in range(0, len(subset_paragraph)):
         last_user = 5  # for the purpose of proper update to word tags and their values.
-        for annotation in range(0, len(subset_first_annotations)):
-            if subset_first_annotations.iloc[annotation, 3] <= subset_first_paragraph.iloc[word, 3] and subset_first_annotations.iloc[annotation, 4] >= subset_first_paragraph.iloc[word, 4]:
+        for annotation in range(0, len(subset_annotations)):
+            if subset_annotations.iloc[annotation, 3] <= subset_paragraph.iloc[word, 3] and subset_annotations.iloc[annotation, 4] >= subset_paragraph.iloc[word, 4]:
                 for user in range(5, 8):
-                    if subset_first_annotations.iloc[annotation, user] is not None and last_user < 8:
-                        subset_first_paragraph.iloc[word, last_user] = subset_first_annotations.iloc[annotation, 1]
+                    if subset_annotations.iloc[annotation, user] is not None and last_user < 8:
+                        subset_paragraph.iloc[word, last_user] = subset_annotations.iloc[annotation, 1]
                         last_user += 1
 
-    # dense_df = subset_first_paragraph.copy()
-    # dense_df = dense_df[(dense_df['user_3'] != '') |
-    #                     (dense_df['user_2'] != '') |
-    #                     (dense_df['user_1'] != '')]
-
-    return subset_first_paragraph
-
-
-# test_try = process_each_paragraph('00cc1fdc-feff-4b90-b5c0-1f1055129d0c')
-# test_try = process_each_paragraph('00cc1fdc-feff-4b90-b5c0-1f1055129d0c')  # checking about np.nan
+    return subset_paragraph
 
 
 if __name__ == "__main__":
 
-    # results = pd.DataFrame()
-    # start_loop = time.time()
-    #
-    # for id in ids[:200]:
-    #     pd.concat([results, process_each_paragraph(id)], axis=0)
-    # end_loop = time.time()
-    # print("time taken as loop ", end_loop-start_loop)
-
-    start_pool = time.time()
     with mp.Pool(mp.cpu_count()-1) as pool:
         results = pool.map(process_each_paragraph, ids[:])
 
     output = pd.concat(results, axis=0)
     output.to_csv('sparse_annotations.csv', index=False, encoding='utf-8-sig')
 
-    end_pool = time.time()
-    print("time taken with mp: " , end_pool-start_pool)
-    # print(results)
-    # print(type(results))
-
-
-#  testing[any([np.where(testing['user_1'].values == '', 0, 1)==1, np.where(testing['user_2'].values == '', 0, 1)==1])]
