@@ -1,8 +1,0 @@
-conf*
-.idea
-venv
-verdicts_documents
-.ipynb_checkpoints/
-__pycache__/
-*annotations.csv
-participants_log
